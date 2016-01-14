@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Auddd.iml" filepath="$PROJECT_DIR$/Auddd.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bubble-chat-and.iml" filepath="$PROJECT_DIR$/bubble-chat-and.iml" />
     </modules>
   </component>
 </project>
