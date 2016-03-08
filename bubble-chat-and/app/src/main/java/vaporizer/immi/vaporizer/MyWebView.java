@@ -12,9 +12,6 @@ import android.widget.Toast;
  */
 public final class MyWebView extends WebView {
     Context mContext;
-    GestureDetector gestureDetector = new GestureDetector(new MyGestureDetector());
-
-
     public MyWebView(Context context) {
         super(context);
         mContext=context;
@@ -73,10 +70,5 @@ public final class MyWebView extends WebView {
             }
             return false;
         }
-
-        public boolean onTouchEvent(MotionEvent ev) {
-            return (gestureDetector.onTouchEvent(ev) || true);
-        }
-
     }
 }

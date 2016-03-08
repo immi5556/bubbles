@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity  {
         mWebView = (MyWebView) findViewById(R.id.myWebView);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl("http://bubble.immanuel.co");
         //mWebView.loadUrl("http://192.168.1.102:8084/");
     }
