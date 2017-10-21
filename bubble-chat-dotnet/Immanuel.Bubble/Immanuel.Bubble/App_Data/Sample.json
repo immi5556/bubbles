@@ -1,0 +1,26 @@
+﻿{
+  "initby": {
+    "displayname": "aa-dhybk",
+    "nickname": "aa-dhybk",
+    "fishidx": 14,
+    "socketid": "a81d2cd0-b525-47b2-9bf1-3d1d7a9d5f7a",
+    "uwidx": 5
+  },
+  "touser": {
+    "displayname": "aa-ekd86",
+    "nickname": "aa-ekd86",
+    "fishidx": 9,
+    "socketid": "c4e6252a-167b-4ff1-ac8f-dc4bfce383b4"
+  },
+  "fromuser": {
+    "displayname": "aa-dhybk",
+    "nickname": "aa-dhybk",
+    "fishidx": 14,
+    "socketid": "a81d2cd0-b525-47b2-9bf1-3d1d7a9d5f7a",
+    "uwidx": 5
+  },
+  "message": {
+    "message": "hii",
+    "classid": "aa-zspw"
+  }
+}
