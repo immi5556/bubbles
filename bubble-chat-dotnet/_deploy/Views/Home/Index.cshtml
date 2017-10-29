@@ -6,73 +6,85 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/Content/jqui/jquery-ui.min.css">
     <style type="text/css">
-		body {
-			background-color: black;
-		}
-		#container {
-		    border: 0px solid;
-		    width: 100%;
-		    margin: auto;
-		    display: block;
-		    max-width: 652px;
-		    text-align: center;;
-		    overflow-x: hidden;
-		}
-		#header {
-		    top: 0px;
-		    background-color: #0C1A5D;
-		    width: 100%;
-		    z-index: 1;
-		    text-align: center;
-		    border-radius: 5px;
-		    vertical-align: middle;;
-		    display: block;
-		    border: 1px solid;
-		    min-height: 40px;
-		}
-		#header h2 {
-			top: 50%;
-			color: white;
-		}
-		#content {
-		    width: 100%;
-		    overflow-x: hidden;
-		    overflow-y: hidden;
-		    clear: both;
-		    border: 1px solid;
-		    border-radius: 5px;
-		    margin-top: 5px;
-		}
-		#content h3 {
-			background-color: #2469A2;
-			margin-top: 0px;
-			color: white;
-		}
-		.post {
-		    width: 100%;
-		    text-align: center;
-		}
-		.converse h3 {
-			height: 30px;
-			padding-top: 10px;
-		}
+        body {
+            background-color: black;
+        }
+
+        #container {
+            border: 0px solid;
+            width: 100%;
+            margin: auto;
+            display: block;
+            max-width: 652px;
+            text-align: center;
+            ;
+            overflow-x: hidden;
+        }
+
+        #header {
+            top: 0px;
+            background-color: #0C1A5D;
+            width: 100%;
+            z-index: 1;
+            text-align: center;
+            border-radius: 5px;
+            vertical-align: middle;
+            ;
+            display: block;
+            border: 1px solid;
+            min-height: 40px;
+        }
+
+            #header h2 {
+                top: 50%;
+                color: white;
+            }
+
+        #content {
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            clear: both;
+            border: 1px solid;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+            #content h3 {
+                background-color: #2469A2;
+                margin-top: 0px;
+                color: white;
+            }
+
+        .post {
+            width: 100%;
+            text-align: center;
+        }
+
+        .converse h3 {
+            height: 30px;
+            padding-top: 10px;
+        }
+
         .converse {
             background-image: url('/Content/img/uw2.jpg');
             background-size: 100% 100%;
             opacity: 1;
         }
-		.pool {
-			margin-top: 0px;
-			background-image: url('/Content/img/pool.jpg');
-			background-size:100% 100%;
-			opacity: .8;
-			margin-bottom: -10px;
-		}
 
-		.pool h3 {
-			height: 35px;
-			padding-top: 15px;
-		}
+        .pool {
+            margin-top: 0px;
+            background-image: url('/Content/img/pool.jpg');
+            background-size: 100% 100%;
+            opacity: .8;
+            margin-bottom: -10px;
+        }
+
+            .pool h3 {
+                height: 35px;
+                padding-top: 15px;
+            }
+
         .reef-coral {
             /*background-image: url('/Content/img/reefcoral.gif');*/
             position: absolute;
@@ -81,138 +93,183 @@
             width: 20%;
             display: none;
         }
-		.anch-gold {
-			animation-name: spin;
-			animation-duration: 6000ms;
-		    animation-iteration-count: infinite;
-		    animation-timing-function: linear;
-			position: absolute;
-			bottom: 15;
-			right: 25;
-			width: 5%;
-			height: 20%;
-			display: none;
-		}
-		.img-users {
-			width: 35px;
-			height: 30px;
-		}
-		.users {
-			position:absolute;
-			border-radius: 50%;
-			border: 1px solid white;
-			width: 40px;
-			height: 40px;
-		}
 
-		@@media only screen and (max-width: 650px) {
-		    .reef-coral {
-		    	display: none;
-		    }
-		    .anch-gold {
-		    	display: none;
-		    }
-		}
+        .anch-gold {
+            animation-name: spin;
+            animation-duration: 6000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            position: absolute;
+            bottom: 15;
+            right: 25;
+            width: 5%;
+            height: 20%;
+            display: none;
+        }
 
-		.users:hover{border: 5px double white;}
+        .img-users {
+            width: 35px;
+            height: 30px;
+        }
 
-		.users {
-		    animation-name: spin;
-		    animation-duration: 6000ms;
-		    animation-iteration-count: infinite;
-		    animation-timing-function: linear;
-		}
+        .users {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid white;
+            width: 40px;
+            height: 40px;
+        }
 
-		@@keyframes spin {
-		    from { transform: rotate(0deg); }
-		    25% { transform: rotate(10deg); }
-		    50% { transform: rotate(0deg); }
-		    75% { transform: rotate(-5deg); }
-		    to { transform: rotate(0deg); }
-		}
+        @@media only screen and (max-width: 650px) {
+            .reef-coral {
+                display: none;
+            }
 
-		.active {
-			display: block;
-		}
+            .anch-gold {
+                display: none;
+            }
+        }
 
-		.hide {
-			display: none;
-		}
+        .users:hover {
+            border: 5px double white;
+        }
 
-		/*chat bubble css copied src: */
+        .users {
+            animation-name: spin;
+            animation-duration: 6000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
 
-		.chat {
+        @@keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
 
-		}
+            25% {
+                transform: rotate(10deg);
+            }
 
-		.bubble{
-		    background-color: #F2F2F2;
-		    border-radius: 5px;
-		    box-shadow: 0 0 6px #B2B2B2;
-		    display: inline-block;
-		    padding: 10px 18px;
-		    position: relative;
-		    vertical-align: top;
-		}
+            50% {
+                transform: rotate(0deg);
+            }
 
-		.bubble::before {
-		    background-color: #F2F2F2;
-		    content: "\00a0";
-		    display: block;
-		    height: 16px;
-		    position: absolute;
-		    top: 11px;
-		    transform:             rotate( 29deg ) skew( -35deg );
-		        -moz-transform:    rotate( 29deg ) skew( -35deg );
-		        -ms-transform:     rotate( 29deg ) skew( -35deg );
-		        -o-transform:      rotate( 29deg ) skew( -35deg );
-		        -webkit-transform: rotate( 29deg ) skew( -35deg );
-		    width:  20px;
-		}
+            75% {
+                transform: rotate(-5deg);
+            }
 
-		.me {
-		    float: left;
-		    margin: 5px 45px 5px 20px;
-		}
+            to {
+                transform: rotate(0deg);
+            }
+        }
 
-		.me::before {
-		    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
-		    left: -9px;
-		}
+        .active {
+            display: block;
+        }
 
-		.you {
-		    float: right;
-		    margin: 5px 20px 5px 45px;
-		}
+        .hide {
+            display: none;
+        }
 
-		.you::before {
-		    box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
-		    right: -9px;
-		}
+        /*chat bubble css copied src: */
 
-		/*caht menu users*/
+        .chat {
+        }
 
-		.img-users {
-			width: 35px;
-			height: 30px;
-		}
-		.menu-users {
-			border-radius: 50%;
-			float: left;
-			margin-left: 10px;
-			width: 40px;
-			height: 40px;
-			opacity: 1;
-			white-space: nowrap;
-			background-color: blue;
-		}
-		.menu-users:hover{
-			opacity:0.5;
-		}
+        .bubble {
+            background-color: #F2F2F2;
+            border-radius: 5px;
+            box-shadow: 0 0 6px #B2B2B2;
+            display: inline-block;
+            padding: 10px 18px;
+            position: relative;
+            vertical-align: top;
+        }
+
+            .bubble::before {
+                background-color: #F2F2F2;
+                content: "\00a0";
+                display: block;
+                height: 16px;
+                position: absolute;
+                top: 11px;
+                transform: rotate( 29deg ) skew( -35deg );
+                -moz-transform: rotate( 29deg ) skew( -35deg );
+                -ms-transform: rotate( 29deg ) skew( -35deg );
+                -o-transform: rotate( 29deg ) skew( -35deg );
+                -webkit-transform: rotate( 29deg ) skew( -35deg );
+                width: 20px;
+            }
+
+        .me {
+            float: left;
+            margin: 5px 45px 5px 20px;
+        }
+
+            .me::before {
+                box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+                left: -9px;
+            }
+
+        .you {
+            float: right;
+            margin: 5px 20px 5px 45px;
+        }
+
+            .you::before {
+                box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
+                right: -9px;
+            }
+
+        /*caht menu users*/
+
+        .img-users {
+            width: 35px;
+            height: 30px;
+        }
+
+        .menu-users {
+            border-radius: 50%;
+            float: left;
+            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            opacity: 1;
+            white-space: nowrap;
+            background-color: blue;
+        }
+
+            .menu-users:hover {
+                opacity: 0.5;
+            }
     </style>
-    <title>Bubble bla - Your Chat</title>
+    <title>Bubble Chat - Your Free Simple Chat application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="language" content="en-us" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Simple anonymous chat application, without any database and just enables point to point communication and no tracking" />
+    <meta name="keywords" content="chat, no tracking, bubble chat, android, Immanuel, developer" />
+    <meta name="classification" content="Chat, anonymous chat, Immanuel developer, Immanuel developer, software developer" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    <meta name="google-site-verification" content="j8QlBBPilt12skJPvjHLDfOGe98RxhAcBc9WnwiHQ3o" />
+    <meta name="robots" content="index, follow" />
+    <meta name="revisit-after" content="21 days" />
+    <meta name="creator" content="Immanuel, Immanuel, raj@immanuel.co, Immanuel.co" />
+    <meta name="publisher" content="Immanuel, immanuel.co" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 </head>
 <body>
+    <div class="appbtns">
+        <a href="https://itunes.apple.com/us/app/within30-scheduling-made-easy/id1185255127?ls=1&amp;mt=8" target="_blank" style="color: #337ab7;text-decoration: none;float: left;width: 98px;margin-right: 10px;margin-top: -2px;">
+            <img src="/Content/img/appStore.svg" alt="AppStore">
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=vaporizer.immi.vaporizer" target="_blank" style="color: #337ab7;text-decoration: none;float: left;width: 98px;margin-right: 10px;margin-top: -2px;">
+            <img src="/Content/img/playStore.svg" alt="PlayStore">
+        </a>
+    </div>
     <div id="container">
         <div id="header" style="position:relative;">
             <h2>BUBBLE CHAT</h2>
@@ -420,7 +477,7 @@
             }
 
             var addUser = function (nuser) {
-                var $div = $("<div class='users " + nuser.nickname + "' style='left:" + randoms(sizes.pool.lmin, sizes.pool.lmax) + ";top:" + randoms(sizes.pool.tmin, sizes.pool.tmax) + ";overflow:visible;'><img class='img-users' src='Content/img/fish_" + nuser.fishidx + ".png'><br /><b style='color:white;margin-left:-5px;'>" + nuser.nickname + "</b></div>");
+                var $div = $("<div class='users " + nuser.nickname + "' style='left:" + randoms(sizes.pool.lmin, sizes.pool.lmax) + ";top:" + randoms(sizes.pool.tmin, sizes.pool.tmax) + ";overflow:visible;'><img class='img-users' src='/Content/img/fish_" + nuser.fishidx + ".png'><br /><b style='color:white;margin-left:-5px;'>" + nuser.nickname + "</b></div>");
                 $div.data("fish-info", nuser);
                 $(".pool").append($div);
 
@@ -487,14 +544,14 @@
 							<div class="right-carsl" style="position:absolute;right:0;top:50%;color:white;font-size:200%;">&gt;</div> \
 							<div class="left-carsl" style="position:absolute;left:0;top:50%;color:white;font-size:200%;">&lt;</div> \
 							<div style="float:left;width:20%"> \
-								<div class="users-me" style="visibility:hidden;"><img src="Content/img/fish_1.png" style="max-width:50px;" /></div> \
+								<div class="users-me" style="visibility:hidden;"><img src="/Content/img/fish_1.png" style="max-width:50px;" /></div> \
 							</div> \
 							<div class="chat-window" style="float:left;width:80%;height:45%;margin-top:-7px;overflow-x: hidden;;overflow-y:visible;"> \
 								<div class="chat chat-bbl-cont"> \
 								</div> \
 							</div> \
 							<div style="float:left;width:20%"> \
-								<div class="users-me" style="display:none">><img src="Content/img/fish_1.png" style="max-width:50px;" /></div> \
+								<div class="users-me" style="display:none">><img src="/Content/img/fish_1.png" style="max-width:50px;" /></div> \
 							</div> \
 							<div style="width:80%;float:left;margin-left:25%;"> \
 								<div class="bubble me"> \
@@ -534,7 +591,7 @@
                     addMessage($cvrs, cnvmsg, srcinv);
                 }
 
-                var $mitem = $("<div class='menu-users " + cnvmsg.touser.nickname + "' data-menuitem='" + cnvmsg.touser.nickname + "''><img class='img-users' src='Content/img/fish_" + cnvmsg.touser.fishidx + ".png'><br /><b style='color:white;margin-left:-5px;display:none;'>" + cnvmsg.touser.displayname + "</b></div>");
+                var $mitem = $("<div class='menu-users " + cnvmsg.touser.nickname + "' data-menuitem='" + cnvmsg.touser.nickname + "''><img class='img-users' src='/Content/img/fish_" + cnvmsg.touser.fishidx + ".png'><br /><b style='color:white;margin-left:-5px;display:none;'>" + cnvmsg.touser.displayname + "</b></div>");
                 $("#chat-menu").append($mitem);
                 $mitem.on("dblclick, taphold", function () {
                     var cls = $(this).data("menuitem");

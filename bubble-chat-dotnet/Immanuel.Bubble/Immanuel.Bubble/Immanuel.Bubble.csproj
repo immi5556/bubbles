@@ -183,6 +183,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\anch_gld.jpg" />
     <Content Include="Content\img\anch_gld.png" />
+    <Content Include="Content\img\appStore.svg" />
     <Content Include="Content\img\collapse.png" />
     <Content Include="Content\img\expand.png" />
     <Content Include="Content\img\fish_1.png" />
@@ -202,6 +203,7 @@
     <Content Include="Content\img\fish_7.png" />
     <Content Include="Content\img\fish_8.png" />
     <Content Include="Content\img\fish_9.png" />
+    <Content Include="Content\img\playStore.svg" />
     <Content Include="Content\img\pool.jpg" />
     <Content Include="Content\img\reefcoral.gif" />
     <Content Include="Content\img\underwater.gif" />

@@ -26,10 +26,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2017 03:57:22</publishTime>
     </File>
     <File Include="bin/Immanuel.Bubble.dll">
-      <publishTime>10/21/2017 06:22:52</publishTime>
+      <publishTime>10/30/2017 01:16:08</publishTime>
     </File>
     <File Include="bin/Immanuel.Bubble.pdb">
-      <publishTime>10/21/2017 06:22:52</publishTime>
+      <publishTime>10/30/2017 01:16:08</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/01/2016 01:37:42</publishTime>
@@ -202,6 +202,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/img/anch_gld.png">
       <publishTime>10/21/2017 04:12:41</publishTime>
     </File>
+    <File Include="Content/img/appStore.svg">
+      <publishTime>10/30/2017 01:09:14</publishTime>
+    </File>
     <File Include="Content/img/collapse.png">
       <publishTime>10/21/2017 04:12:41</publishTime>
     </File>
@@ -258,6 +261,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/img/fish_9.png">
       <publishTime>10/21/2017 04:12:41</publishTime>
+    </File>
+    <File Include="Content/img/playStore.svg">
+      <publishTime>10/30/2017 01:09:32</publishTime>
     </File>
     <File Include="Content/img/pool.jpg">
       <publishTime>10/21/2017 04:12:41</publishTime>
@@ -341,7 +347,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2017 03:57:10</publishTime>
     </File>
     <File Include="favicon.ico">
-      <publishTime>10/21/2017 03:57:10</publishTime>
+      <publishTime>10/21/2017 06:26:56</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
       <publishTime>10/21/2017 03:57:14</publishTime>
@@ -409,8 +415,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/respond.min.js">
       <publishTime>10/21/2017 03:57:19</publishTime>
     </File>
+    <File Include="sitemap.xml">
+      <publishTime>10/30/2017 01:25:58</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>10/21/2017 06:13:24</publishTime>
+      <publishTime>10/30/2017 01:22:59</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>10/21/2017 03:57:10</publishTime>
