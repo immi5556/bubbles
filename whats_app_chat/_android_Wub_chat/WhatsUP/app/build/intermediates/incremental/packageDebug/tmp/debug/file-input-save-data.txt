@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Wed Sep 12 23:22:49 IST 2018
+0.baseType=DIRECTORY
+0.base=C\:\\Immi\\Personal\\MyProjects\\bubble-chat\\whats_app_chat\\_android_Wub_chat\\WhatsUP\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+0.path=classes.dex
+0.set=DEX
+count=1

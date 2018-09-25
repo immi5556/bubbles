@@ -1,0 +1,163 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+}
+
+body {
+    font-family: Verdana, sans-serif;
+}
+
+span.day-ll {
+    display: block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 30px; /* or 50% */
+    border-radius: 30px; /* or 50% */
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+}
+
+.month {
+    padding: 20px 25px;
+    width: 100%;
+    background: #ff9800;
+    text-align: center;
+}
+
+    .month ul {
+        margin: 0;
+        padding: 0;
+    }
+
+        .month ul li {
+            color: white;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+    .month .prev {
+        float: left;
+        padding-top: 10px;
+        display: none;
+    }
+
+    .month .next {
+        float: right;
+        padding-top: 10px;
+        display: none;
+    }
+
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color: #ddd;
+}
+
+    .weekdays li {
+        display: inline-block;
+        width: 14%;
+        color: #666;
+        text-align: center;
+    }
+
+.days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 14%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #777;
+    border: 1px dashed red;
+    padding: 5px;
+}
+
+.days li a {
+    cursor: pointer;
+}
+
+.days li a.hrs-fill {
+    width: 100%;
+    display: block;
+}
+
+.days li a.hrs-pred {
+    width: 100%;
+    display: block;
+}
+
+        .days li.active {
+            padding: 5px;
+            background: #ff9800;
+            color: white !important
+        }
+
+.bg-green {
+    background-color: #b7ecf3;
+}
+
+.bg-darkgreen {
+    background-color: #4caf50;
+}
+
+.light-grey {
+    position: fixed;
+    width: 70%; /* Set your desired with */
+    z-index: 2; /* Make sure its above other items. */
+    top: 50%;
+    left: 30%;
+    margin-top: -10%; /* Changes with height. */
+    margin-left: -10%; /* Your width divided by 2. */
+    /* You will not need the below, its only for styling   purposes. */
+    background-color: #ccc;
+    text-align: center;
+    height: 34px;
+}
+
+.s-tabs {
+    background-color: #ccc;
+}
+
+    .s-tabs.selected {
+        background-color: #ccc;
+        background-color: #777;
+    }
+
+    .s-tabs:hover {
+        background-color: #777;
+    }
+/* Add media queries for smaller screens */
+@media screen and (max-width:720px) {
+    .weekdays li, .days li {
+        width: 14%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .weekdays li, .days li {
+        width: 14%;
+    }
+
+        .days li .active {
+            padding: 2px;
+        }
+}
+
+@media screen and (max-width: 290px) {
+    .weekdays li, .days li {
+        width: 12.2%;
+    }
+}

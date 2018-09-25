@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    	style="@style/profileContactCard"
+        android:orientation="vertical"
+        tools:ignore="UselessParent" >
+
+		<TextView
+             android:id="@+id/textView2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Group Subject"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/main" />
+        <View
+            android:id="@+id/hr2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main" />
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Type group subject here" >
+        </EditText>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Group Icon"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/main"
+            tools:ignore="HardcodedText" />
+        <View
+            android:id="@+id/hr"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/user_image_2"
+                tools:ignore="ContentDescription" />
+
+			<ImageButton
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="bottom"
+			    android:background="@drawable/bg_button"
+			    android:src="@drawable/ic_action_edit"
+			    tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+        <TextView
+             android:id="@+id/textView3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Add Group Participants"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/main" />
+        <View
+            android:id="@+id/hr3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main" />
+
+        <ListView
+            android:id="@+id/contactList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:ignore="NestedScrolling" >
+
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

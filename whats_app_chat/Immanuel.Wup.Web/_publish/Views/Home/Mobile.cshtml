@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mobile</title>
+</head>
+<body>
+    <div id="container"> 
+    </div>
+    <div>
+        <input type="button" value="camera" id="cam" />
+        <input type="button" value="location" id="loc" />
+    </div>
+    <script>
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        var d = document.createElement("div");
+        d.innerHTML = getParameterByName("DeviceModel");
+        document.getElementById("container").appendChild(d);
+
+        d = document.createElement("div");
+        d.innerHTML = Android.getDeviceToken();
+        document.getElementById("container").appendChild(d);
+
+        Android.enablePushNotification("fnpush");
+
+        var fnpush = function (msg) {
+            alert(msg);
+        }
+
+        document.getElementById("cam").addEventListener("click", function (evt) {
+            Android.startCamera("camimg");
+        });
+        var camimg = function (base64Img) {
+            alert(base64Img);
+        }    
+
+        document.getElementById("loc").addEventListener("click", function (evt) {
+            Android.enableLocation("getloc", "freqloc");
+        });
+        var getloc = function (msg) {
+            alert(msg);
+        }
+
+        var freqloc = function (msg) {
+            alert(msg);
+        }
+
+    </script>
+</body>
+</html>

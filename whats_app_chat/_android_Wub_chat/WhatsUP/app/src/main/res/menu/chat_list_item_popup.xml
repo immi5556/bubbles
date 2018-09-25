@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/viewContact"
+        android:title="@string/viewContact"/>
+    <item
+        android:id="@+id/addConversationShortCut"
+        android:title="@string/addConversationShortCut"/>
+    <item
+        android:id="@+id/archiveConversation"
+        android:title="@string/archiveConversation"/>
+    <item
+        android:id="@+id/deleteConversation"
+        android:title="@string/deleteConversation"/>
+    <item
+        android:id="@+id/emailConversation"
+        android:title="@string/emailConversation"/>
+
+</menu>

@@ -1,0 +1,4 @@
+#Wed Sep 12 23:22:49 IST 2018
+base.0=C\:\\Immi\\Personal\\MyProjects\\bubble-chat\\whats_app_chat\\_android_Wub_chat\\WhatsUP\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

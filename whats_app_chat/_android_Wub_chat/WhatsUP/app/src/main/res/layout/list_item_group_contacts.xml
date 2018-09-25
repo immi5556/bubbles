@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_home_chat_list_item"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent" >
+
+        <ImageView
+            android:id="@+id/groupListItemImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/user_image_6"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
+        <LinearLayout
+            android:id="@+id/chatListItemInfoContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                <TextView
+                    android:id="@+id/groupListItemName"
+                    style="@style/chatListItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Atouch Mohamed"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:ignore="HardcodedText" />
+
+                <CheckBox
+                    android:id="@+id/checkBox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

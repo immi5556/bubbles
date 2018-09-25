@@ -1,0 +1,526 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Immanuel - Video Sender..</title>
+    <link href="~/Content/css/material-design-iconic-font.min.css" rel="stylesheet" />
+    <link href="~/Content/css/materialize.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <script src="~/Content/js/moment.js"></script>
+    <link href="~/Content/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/css/normalize.min.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/animatedModal.js"></script>
+    <script src="~/Content/js/a7-vid.js"></script>
+    <style>
+        .message.sent {
+            max-width: 350px;
+            z-index: 15;
+        }
+
+        .conversation-compose .input-msg {
+            resize: unset;
+            margin-top: -5px;
+            height: 100%;
+            background-color: white;
+        }
+
+        .caption-text {
+            font-family: cursive;
+            font-size: x-large;
+            text-align: center;
+        }
+
+        .user-bar {
+            background-color: rgb(47, 62, 70);
+        }
+
+        ::-webkit-input-placeholder {
+            text-align: center;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            text-align: center;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            text-align: center;
+        }
+
+        :-ms-input-placeholder {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" style="display:none;"></canvas>
+    <input style="display:none;" type="file" name="myImage" id="myImage" multiple accept="image/*" />
+    @*<input style="display:none;" type="file" name="myVideo" id="myVideo" multiple accept="video/mp4,video/x-m4v,video/x-flv,.flv,video/x-matroska,.mkv,video/*" />*@
+    <input style="display:none;" type="file" name="myVideo" id="myVideo" multiple />
+    <a id="video-modal-b" href="#video-modal" style="display:none;">Video Modal</a>
+
+    <div id="video-modal">
+        <div class="modal-header">
+            <h5 style="font-family:cursive;color:darkgray;">Send Videos</h5>
+        </div>
+        <div class="modal-content" style="text-align:center;">
+
+        </div>
+        <br />
+        <div style="text-align:center;padding-bottom:5px;position:fixed;bottom:0px;width:100%;opacity: 0.9;background-color: #607D8B;line-height: 5;">
+            <button id="file-upld" class="btn waves-effect waves-light close-video-modal" name="action">
+                Send
+                <i class="material-icons right"></i>
+            </button>
+            <button id="upl-cancel" style="margin-left:75px;" class="btn waves-effect waves-light close-video-modal" name="action">
+                Cancel
+                <i class="material-icons right"></i>
+            </button>
+        </div>
+    </div>
+    <div class="page">
+        <div class="marvel-device nexus5">
+            <div class="top-bar"></div>
+            <div class="sleep"></div>
+            <div class="volume"></div>
+            <div class="camera"></div>
+            <div class="screen">
+                <div class="screen-container">
+                    <div class="status-bar">
+                        <div class="time"></div>
+                        <div class="battery">
+                            <i class="zmdi zmdi-battery"></i>
+                        </div>
+                        <div class="network">
+                            <i class="zmdi zmdi-network"></i>
+                        </div>
+                        <div class="wifi">
+                            <i class="zmdi zmdi-wifi-alt-2"></i>
+                        </div>
+                        <div class="star">
+                            <i class="zmdi zmdi-star"></i>
+                        </div>
+                    </div>
+                    <div class="chat">
+                        <div class="chat-container">
+                            <div class="user-bar">
+                                <div class="back" style="display:none;">
+                                    <i class="zmdi zmdi-arrow-left"></i>
+                                </div>
+                                <div class="avatar">
+                                    <img src="~/Content/img/no_img.png" alt="Avatar">
+                                </div>
+                                <div class="name" style="text-overflow:unset;width: 60%;overflow-y: auto;max-height: 55px;">
+                                    <span id="conv-title">@Html.Raw(@ViewBag.PageTitle ?? "Conversation")</span>
+                                    <span style="display:none;" class="status">online</span>
+                                </div>
+                                <div class="actions more add-wup" style="margin-left:5px;display:none;">
+                                    <i class="zmdi zmdi-shield-security"></i>
+                                </div>
+                                <div class="actions more open-paglst" style="margin-left:5px;display:block;">
+                                    <i class="zmdi zmdi-home"></i>
+                                </div>
+                            </div>
+                            <div class="conversation">
+                                <div class="conversation-container">
+                                </div>
+                                <div class="conversation-compose">
+                                    <div class="emoji">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="smiley" x="3147" y="3209"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.153 11.603c.795 0 1.44-.88 1.44-1.962s-.645-1.96-1.44-1.96c-.795 0-1.44.88-1.44 1.96s.645 1.965 1.44 1.965zM5.95 12.965c-.027-.307-.132 5.218 6.062 5.55 6.066-.25 6.066-5.55 6.066-5.55-6.078 1.416-12.13 0-12.13 0zm11.362 1.108s-.67 1.96-5.05 1.96c-3.506 0-5.39-1.165-5.608-1.96 0 0 5.912 1.055 10.658 0zM11.804 1.01C5.61 1.01.978 6.034.978 12.23s4.826 10.76 11.02 10.76S23.02 18.424 23.02 12.23c0-6.197-5.02-11.22-11.216-11.22zM12 21.355c-5.273 0-9.38-3.886-9.38-9.16 0-5.272 3.94-9.547 9.214-9.547a9.548 9.548 0 0 1 9.548 9.548c0 5.272-4.11 9.16-9.382 9.16zm3.108-9.75c.795 0 1.44-.88 1.44-1.963s-.645-1.96-1.44-1.96c-.795 0-1.44.878-1.44 1.96s.645 1.963 1.44 1.963z" fill="#7d8489" /></svg>
+                                    </div>
+                                    <textarea id="input-msg" class="input-msg" name="input" placeholder="Type a message" autocomplete="off" autofocus></textarea>
+                                    <div class="photo img-vid">
+                                        <i class="zmdi zmdi-videocam"></i>
+                                    </div>
+                                    <div class="photo img-pic">
+                                        <i class="zmdi zmdi-camera"></i>
+                                    </div>
+                                    <button id="sendMsg" class="send">
+                                        <div class="circle" style="background-color:#2f3e46;">
+                                            <i class="zmdi zmdi-mail-send"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vidInst = document.querySelector("#video-modal-b"),
+            vidModl = document.getElementById("video-modal"),
+            imgFile = document.querySelector("#myImage"),
+            vidFile = document.querySelector("#myVideo");
+
+        document.addEventListener('DOMContentLoaded', function () {
+            $("#security-modal-b").animatedModal({
+                modalTarget: 'security-modal',
+                animatedIn: 'lightSpeedIn',
+                animatedOut: 'bounceOutDown',
+                color: 'rgb(47, 62, 70)',
+                // Callbacks
+                beforeOpen: function () {
+                    console.log("Security - The animation was called");
+                },
+                afterOpen: function () {
+                    console.log("Security - The animation is completed");
+                },
+                beforeClose: function () {
+                    console.log("Security - The animation was called");
+                },
+                afterClose: function () {
+                    console.log("Security - The animation is completed");
+                }
+            });
+
+            $("#video-modal-b").animatedModal({
+                modalTarget: 'video-modal',
+                animatedIn: 'lightSpeedIn',
+                animatedOut: 'bounceOutDown',
+                color: 'rgb(47, 62, 70)',
+                // Callbacks
+                beforeOpen: function () {
+                    console.log("video - The animation was called");
+                },
+                afterOpen: function () {
+                    console.log("video - The animation is completed");
+                },
+                beforeClose: function () {
+                    console.log("video - The animation was called");
+                },
+                afterClose: function () {
+                    console.log("video - The animation is completed");
+                }
+            });
+
+            var ii = localStorage.getItem("userdetail");
+            console.log(ii);
+            //a7progress.open();
+            if (!ii) {
+                //fetch('https://geoip.immanuel.co/myip').then(resp => {
+                //    return resp.json();
+                //}).then(resp => {
+                //    //console.log(resp);
+                //    fetch('https://geoip.immanuel.co/address/' + resp).then(res => {
+                //        return res.json();
+                //    }).then(res => {
+                //        console.log(res);
+                //        a7progress.close();
+                //        document.getElementById("defaultCountry").value = (res.Address.country_iso_code || '').toUpperCase();
+                //        a7profile.open();
+                //    });
+                //    });
+                document.getElementById("defaultCountry").value = "IN";
+                a7profile.open();
+            } else {
+                userdetail = JSON.parse(ii);
+                if (!userdetail.version || userdetail.version < 2) {
+                    localStorage.clear();
+                    window.location.reload(true);
+                    return;
+                }
+                var spltcnt = window.location.href.split('/').filter(t => t);
+                if (spltcnt.length > 5) {
+                    var pgid = spltcnt[4]; //pageid
+                    loadfiles(pgid, -1);
+                    a7security.assignSecurity();
+                }
+                else if (spltcnt.length == 5) {
+                    var pgid = spltcnt[4];
+                    url = "/Home/Page/" + pgid + "/" + userdetail.mobno;
+                    window.location.href = url;
+                } else {
+                    fetch(apiurl + '/api/page/get/' + userdetail.mobno)
+                        .then(resp => {
+                            return resp.json();
+                        }).then(resp => {
+                            a7pagelist.addItem(resp || []);
+                            a7pagelist.open();
+                            //a7progress.close();
+                        });
+                }
+            }
+        });
+
+        var loadfiles = function (ppid, max) {
+            fetch(apiurl + '/api/file/get/' + ppid + '/' + max)
+                .then(resp => {
+                    return resp.json();
+                }).then(resp => {
+                    appendMessageConverse(resp);
+                    //a7progress.close();
+                });
+        }
+
+        var el = $('.conversation-container');
+        el.on('scroll', function () {
+            //console.log("scrolling..");
+            if (el.scrollTop() == 0) {
+                console.log("i just hit the top");
+            }
+        });
+
+        document.getElementsByClassName("add-wup")[0].addEventListener("click", function () {
+            a7security.open();
+        });
+
+        document.getElementsByClassName("img-pic")[0].addEventListener("click", function () {
+            imgFile.click();
+        });
+
+        document.getElementsByClassName("img-vid")[0].addEventListener("click", function () {
+            ufiles = {};
+            vidModl.getElementsByClassName("modal-content")[0].innerHTML = "";
+            vidFile.value = "";
+            vidFile.click();
+        });
+        var ufiles = {};
+        var fnappend = function (fil, mediatype) {
+            //var key = "";
+            //var extn = fil.name.split('.').pop();
+            //if (!ufiles[fil.name]) {
+            //    key = fil.name;
+            //} else {
+            //    key = fil.name.split('.')[0] + '' + a7utils.randstr(4) + '.' + fil.name.split('.')[1];
+            //    fil.name = key;
+            //}
+            var key = fil.name;
+            ufiles[key] = {
+                file: fil,
+                media: mediatype
+            }
+            var txt = "<div key-attr='" + key + "' class='cont-itm' style='position:relative;'>";
+            //ufiles.push(fil);
+            if (mediatype == "Video") {
+                var fileUrl = window.URL.createObjectURL(fil);
+                txt += "<video onclick='this.paused?this.play():this.pause()' controls='controls' src='" + fileUrl + "' style='max-width:80%;'></video><br>";
+                var file = fil;
+                if ('name' in file) {
+                    txt += "name: " + file.name + " (";
+                }
+                if ('size' in file) {
+                    txt += "size: " + a7utils.formatBytes(file.size) + ") <br>";
+                }
+                txt += "<img class='upl-delete' src='/Content/img/delete_.png' width='30' />";
+                txt += "<br /> <input style='font-size: x-large;border: 2px #00BCD4 ridge;' type='text' class='caption-text' placeholder='Caption' /></div>";
+                //var parser = new DOMParser();
+                //vidModl.getElementsByClassName("modal-content")[0].appendChild(parser.parseFromString(txt, "text/html"));
+                var e = document.createElement('div');
+                e.innerHTML = txt;
+                e.firstChild.getElementsByClassName("upl-delete")[0].addEventListener("click", function () {
+                    var elm = this.closest(".cont-itm");
+                    elm.parentNode.removeChild(elm);
+                    delete ufiles[key];
+                    var arrl = [];
+                    for (var ty in ufiles) {
+                        arrl.push(ty);
+                    }
+                    if (!arrl.length) {
+                        document.getElementById("upl-cancel").click();
+                    }
+                });
+                vidModl.getElementsByClassName("modal-content")[0].appendChild(e.firstChild);
+                //vidModl.getElementsByClassName("modal-content")[0].insertAdjacentHTML('afterend', txt);
+                console.log(txt);
+            }
+
+            if (mediatype == "Image") {
+                a7utils.rendersize(fil).then(compressedfile => {
+                    //console.log(compressedfile);
+                    fil = compressedfile;
+                    ufiles[key] = {
+                        file: fil,
+                        media: mediatype
+                    }
+                    var fileUrl = window.URL.createObjectURL(fil);
+                    txt += "<img src='" + fileUrl + "' style='max-width:80%;' /><br>";
+                    var file = fil;
+                    if ('name' in file) {
+                        txt += "name: " + file.name + " (";
+                    }
+                    if ('size' in file) {
+                        txt += "size: " + a7utils.formatBytes(file.size) + ") <br>";
+                    }
+                    txt += "<img class='upl-delete' src='/Content/img/delete_.png' width='30' />";
+                    txt += "<br /> <input style='font-size: x-large;border: 2px #00BCD4 ridge;' type='text' class='caption-text' placeholder='Caption' /></div>"
+                    //var parser = new DOMParser();
+                    //vidModl.getElementsByClassName("modal-content")[0].appendChild(parser.parseFromString(txt, "text/html"));
+                    var e = document.createElement('div');
+                    e.innerHTML = txt;
+                    e.firstChild.getElementsByClassName("upl-delete")[0].addEventListener("click", function () {
+                        var elm = this.closest(".cont-itm");
+                        elm.parentNode.removeChild(elm);
+                        delete ufiles[key];
+                        var arrl = [];
+                        for (var ty in ufiles) {
+                            arrl.push(ty);
+                        }
+                        if (!arrl.length) {
+                            document.getElementById("upl-cancel").click();
+                        }
+                    });
+                    vidModl.getElementsByClassName("modal-content")[0].appendChild(e.firstChild);
+                    //vidModl.getElementsByClassName("modal-content")[0].insertAdjacentHTML('afterend', txt);
+                    console.log(txt);
+                });
+            }
+        }
+
+        vidFile.addEventListener("change", function (evt) {
+            let cvtpms = [];
+            if ('files' in vidFile) {
+                if (vidFile.files.length == 0) {
+                    txt = "Select one or more files.";
+                } else {
+                    //Start Progress
+                    a7progress.open();
+                    for (var i = 0; i < vidFile.files.length; i++) {
+                        if (a7utils.getMediaType(vidFile.files[i].name) == 'Video') {
+                            var ext = vidFile.files[i].name.split('.').pop();
+                            if ((ext || '').toLowerCase() != "mp4") {
+                                //a7.convert(vidFile.files[i], fnappend);
+                                //a7.convert(vidFile.files[i]).then(fnappend);
+                                cvtpms.push(a7.convert(vidFile.files[i], false));
+                            } else {
+                                cvtpms.push(a7.convert(vidFile.files[i], true));
+                                //fnappend(vidFile.files[i], "Video");
+                            }
+                        } else if (a7utils.getMediaType(vidFile.files[i].name) == 'Image') {
+                            var ext = (vidFile.files[i].name.split('.').pop() || '').toLowerCase();
+                            var fname = vidFile.files[i].name;
+                            fname = fname.split('.')[0] + '' + a7utils.randstr(4) + '.' + ext;
+                            var conttype = a7utils.getImgMime(ext);
+                            //vidFile.files[i].name = fname;
+                            var file = new File([vidFile.files[i]], fname, { type: conttype, lastModified: Date.now() });
+                            fnappend(file, "Image");
+                            //fnappend(vidFile.files[i], "Image");
+                        } else {
+                            console.log(a7utils.getMediaType(vidFile.files[i].name));
+                        }
+                    }
+                    if (cvtpms.length > 0) {
+                        Promise.all(cvtpms).then(function (values) {
+                            values.forEach(vt => {
+                                fnappend(vt, "Video")
+                            });
+                            //Stop PRogress
+                            a7progress.close();
+                            vidInst.click();
+                        }).catch(err => {
+                            a7progress.close();
+                        });
+                    } else {
+                        //Stop PRogress
+                        a7progress.close();
+                        vidInst.click();
+                    }
+                }
+            }
+        });
+
+        document.getElementById("sendMsg").addEventListener("click", function (e) {
+            e.preventDefault();
+            var msg = document.getElementById("input-msg").value;
+            var formData = new FormData();
+            var ii = 0;
+            formData.append('_capt', msg);
+            formData.append('_msgtype', 'html');
+            formData.append('_purl', pdata.Header.PageUrl);
+            formData.append('_nick', userdetail.nick);
+
+            fetch(apiurl + '/api/file/message/' + pdata.Header.PageUrl, {
+                method: 'POST',
+                body: formData // This is your file object
+            })
+                .then(response => response.json())
+                .then(
+                    success => {
+                        console.log(success);
+                        appendMessage();
+                        //a7progress.close();
+                    }
+                ).catch(error => {
+                    console.log(error);
+                    //a7progress.close();
+                });
+
+            newMessage(msg);
+            document.getElementById("input-msg").value = "";
+        });
+
+        document.getElementById("file-upld").addEventListener("click", function () {
+            uploadFiles();
+        });
+
+        var uploadFiles = function () {
+            a7progress.open();
+            var formData = new FormData();
+            var ii = 0;
+            for (var v in ufiles) {
+                var v1 = document.querySelector("[key-attr='" + v + "']");
+                ufiles[v].capt = (v1.getElementsByClassName("caption-text")[0].value || ('q' + (++ii).toString()));
+                formData.append(v, ufiles[v].file)
+                formData.append(v + '_capt', ufiles[v].capt);
+                formData.append(v + '_msgtype', ufiles[v].media);
+                formData.append(v + '_purl', pdata.Header.PageUrl);
+                formData.append(v + '_nick', userdetail.nick);
+            }
+
+            fetch(apiurl + '/api/file/' + pdata.Header.PageUrl, {
+                method: 'POST',
+                body: formData // This is your file object
+            }).then(response => response.json())
+                .then(
+                    success => {
+                        console.log(success);
+                        appendMessage();
+                        a7progress.close();
+                    }
+                ).catch(error => {
+                    console.log(error);
+                    a7progress.close();
+                });
+        }
+
+        document.getElementById("conv-title").addEventListener("focus", function () {
+            console.log("Focus");
+        });
+
+        document.getElementById("conv-title").addEventListener("blur", function () {
+            console.log("Blur");
+        });
+
+        document.getElementsByClassName("open-paglst")[0].addEventListener("click", function () {
+            fetch(apiurl + '/api/page/get/' + userdetail.mobno)
+                .then(resp => {
+                    return resp.json();
+                }).then(resp => {
+                    a7pagelist.addItem(resp || []);
+                    a7pagelist.open();
+                    //a7progress.close();
+                });
+        });
+
+        function pressback() {
+            if (popopen) {
+                a7profile.close();
+                a7security.close();
+                a7pagelist.close();
+            } else {
+                document.getElementsByClassName("open-paglst")[0].click();
+            }
+        }
+
+    </script>
+    <script>
+        var pdata = JSON.parse('@Html.Raw(ViewBag.PageData)');
+    </script>
+    <script src="~/Content/js/wup.js"></script>
+</body>
+</html>

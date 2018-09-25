@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main">#58BA53</color>
+    <color name="chatListItemBackground">#F5F6F8</color>
+    <color name="chatListItemHints">#86878B</color>
+    <color name="menuItems">#868789</color>
+    <color name="drawerListDivider">#58BA53</color>
+    <color name="drawerListBackground">#FFFFFF</color>
+    <color name="drawerListBackgroundPressed">#F0F9F0</color>
+    <color name="buttonBackground">#4AAD45</color>
+    <color name="buttonBackgroundPressed">#80C783</color>
+</resources>

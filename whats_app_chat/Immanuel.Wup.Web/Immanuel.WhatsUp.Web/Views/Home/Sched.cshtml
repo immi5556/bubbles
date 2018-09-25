@@ -1,0 +1,236 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sched</title>
+    <link href="~/Content/css/app.css" rel="stylesheet" />
+    <style>
+        .mdl-item {
+            font-size: larger;
+            font-family: cursive;
+            padding: 26px;
+            border-bottom: 2px #f5f4ed solid;
+            width: 100%;
+            margin: 0px;
+            color: papayawhip;
+        }
+
+        .mdl-cont li {
+            background-color: #8eafb1;
+        }
+
+            .mdl-cont li:nth-child(odd) {
+                background: #6eaaad;
+            }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>Free Broadcast Service..</h3>
+        <h5>Its running from my local home network and the hosted on an old mac book air</h5>
+    </div>
+    <div class="v-contain" style="padding-top: 20px;">
+    </div>
+    <div id="mdl-lst" style="width:100%;height:100%;position:fixed;left:0px;top:0px;background-color: #5b7171;display:none;">
+        <div class="mdl-hdr" style="text-align:center;background-color: darkcyan;padding: 10px;">
+            <h3 style="font-family: cursive;color: antiquewhite;font-size: x-large;">Broadcast (12-12-12)</h3>
+        </div>
+        <div class="mdl-cont" style="max-height:70%;overflow:auto;">
+            <ul>
+                <li>Item-1</li>
+                <li>Item-2</li>
+                <li>Item-3</li>
+            </ul>
+        </div>
+        <div class="mdl-ftr" style="position:fixed;bottom:0px;padding:15px;text-align:right;width:100%;background-color: darkcyan;padding: 10px;">
+            <a class="mdl-close" style="font-size:x-large;background-color: #4CAF50; border: none;color: white;padding:18px;text-align: center;text-decoration: none;display: inline-block;font-size: 18px;border-radius:5px;cursor:pointer;">
+                Close
+            </a>
+        </div>
+    </div>
+    <script>
+
+        var tt = document.getElementById("mdl-lst");
+        var thhdr = tt.getElementsByClassName("mdl-hdr")[0];
+        var thcont = tt.getElementsByClassName("mdl-cont")[0];
+        var thcls = tt.getElementsByClassName("mdl-close")[0];
+        thcls.onclick = function () {
+            tt.style.display = "none";
+        }
+        function randomDate(start, end) {
+            var nd = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+            nd.setMinutes(0); // Floor to minutes
+            return nd;
+        }
+
+        function randomString(len) {
+            return Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 3)
+        }
+
+        function randNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function secondsToHms(d) {
+            d = Number(d);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
+            //var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " sec") : "";
+            sDisplay = "";
+            return trim((hDisplay + mDisplay + sDisplay), ',');
+        }
+
+        function trim(s, c) {
+            if (c === "]") c = "\\]";
+            if (c === "\\") c = "\\\\";
+            console.log(s);
+            s = (s || "").trim();
+            const rep = s.replace(new RegExp("^[" + c + "]+|[" + c + "]+$", "g"), "");
+            console.log(rep);
+            return rep;
+        }
+
+        //randomDate(new Date(2018, 1, 1), new Date(2018, 1, 28)) // Year/Month/Day Random date time in Feb 2018
+        const stdt = new Date(2018, 1, 1);
+        const endt = new Date(2018, 1, 28);
+        var mdd = [...Array(150).keys()].map(t => {
+            const stt = randomDate(stdt, endt);
+            let edt = stt;
+            edt.setMinutes(edt.getMinutes() + 30);
+
+            return {
+                EventDate: stt,
+                Name: randomString(),
+                Thumbnail: '/Content/img/logo_1.png',
+                Title: randomString(),
+                Authors: randomString(),
+                StartAt: stt,
+                Duration: secondsToHms(randNumber(300, 15000))
+            }
+        });
+
+        var eventdata = [
+            {
+                EventDate: '',
+                Name: '',
+                Title: '',
+                Thumbnail: '/Content/img/logo_.png',
+                Authors: '',
+                StartAt: '',
+                Duration: '', //Mins
+            }
+        ]
+        var buildMonth = function (mth, year, mdata) {
+            let noofdays = new Date(year, mth + 1, 0).getDate();
+            let startday = new Date(year, mth, 1).getDay();
+
+            var mcontain = document.createElement("div"); //Month container
+            mcontain.classList.add("m-" + month[mth]);
+
+            var hdr = '<div class="month"><ul><li class="prev">&#10094;</li><li class="next">&#10095;</li><li>';
+            hdr = hdr + month[mth] + '<br>';
+            hdr = hdr + '<span style="font-size:18px">' + year + '</span></li></ul></div>';
+            var whdr = '<ul class="weekdays"><li>Su</li><li>Mo</li><li>Tu</li><li>We</li><li>Th</li><li>Fr</li><li>Sa</li></ul >';
+
+            mcontain.innerHTML = hdr + whdr;
+
+            var dul = document.createElement("ul");
+            dul.classList.add("days");
+            for (var i = 0; i < startday; i++) {
+                dul.innerHTML = dul.innerHTML + '<div style="list-style-type: none;display: inline-block;width: 14%;"></div>';
+            }
+            var ispredinmonth = false;
+            for (var i = 1; i <= noofdays; i++) {
+                var li = document.createElement("li");
+                li.style.height = "130px";
+                li.style.overflow = "auto";
+                li.dataset.mydate = new Date(year, mth, i)
+                var hcont = "<span class='day-ll'>" + i + "</span><div>";
+                var dm = (mdata || []).filter(function (iot) {
+                    if (iot.EventDate) {
+                        //var tdd = new Date(iot.EventDate.match(/\d+/)[0] * 1);
+                        var tdd = iot.EventDate;
+                        return (new Date(tdd.getFullYear(), tdd.getMonth(), tdd.getDate()).toDateString() == new Date(li.dataset.mydate).toDateString());
+                    }
+                    return false;
+                });
+
+                if (dm && dm.length > 0) {
+
+
+                    li.itemdata = dm;
+                    //if (ispredicted) {
+                    //    li.classList.add("bg-green");
+                    //}
+                    dm.forEach(evt => {
+                        hcont = hcont + "<br /><div><a class='hrs-pred'>" + evt.Name + "<br />" + evt.Duration + "</a></div>";
+                    });
+
+                    hcont = hcont + "</div>";
+                    li.innerHTML = hcont;
+                    dul.appendChild(li);
+                } else {
+                    li.innerHTML = hcont;
+                    dul.appendChild(li);
+                }
+
+                li.onclick = function (evt) {
+                    document.querySelectorAll(".days li").forEach(function (itm1) {
+                        itm1.classList.remove("active");
+                    });
+                    var llli;
+                    if (evt.target.localName == "li") {
+                        llli = evt.target;
+                        evt.target.classList.add("active");
+                    }
+                    else {
+                        llli = evt.target.parentNode.closest("li");
+                        evt.target.parentNode.closest("li").classList.add("active");
+                    }
+                    console.log(llli.itemdata);
+                    thcont.innerHTML = "";
+                    var thht = "<ul style='margin:0;padding:0;'>";
+                    (llli.itemdata || []).forEach(t => {
+                        thht += "<li class='mdl-item'>";
+                        thht += "<img style='vertical-align:middle;' src='" + t.Thumbnail + "' width='40' />";
+                        thht += '<span style="padding-left:35px;">' + t.Name + " (" + t.Duration + ") </span>"
+                        thht += '<br /> <span style="padding-left:70px;"> Starts: ' + (t.EventDate < new Date() ? 'Completed' : 'Calculate') + '</span>';
+                        thht += "</li>";
+                    });
+                    thht += "</ul>";
+                    thcont.innerHTML = thht;
+                    tt.style.display = "block";
+                    var cd = new Date(li.dataset.mydate);
+                    thhdr.getElementsByTagName("h3")[0].innerHTML = "Brodcast List <br />(" + cd.getDate() + "-" + month[cd.getMonth()] + "-" + cd.getFullYear() + ")";
+                }
+
+                mcontain.appendChild(dul);
+            }
+            if (ispredinmonth) {
+                mcontain.getElementsByClassName("month")[0].classList.add("bg-darkgreen");
+                mcontain.classList.add("m-projected");
+            }
+            else {
+                mcontain.classList.add("m-hostorical");
+            }
+
+            document.getElementsByClassName("v-contain")[0].appendChild(mcontain);
+        }
+
+        var day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        buildMonth(1, 2018, mdd)
+    </script>
+</body>
+</html>

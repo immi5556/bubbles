@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+	<ScrollView
+	    android:id="@+id/scrollView"
+	    android:layout_width="match_parent"
+        android:layout_height="0dp" 
+        android:layout_weight="1"
+        android:background="@drawable/bg_chat_messages">
+	    <LinearLayout
+	        android:id="@+id/vertical_container"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	    </LinearLayout>
+	</ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main" >
+
+        <ImageButton
+            android:id="@+id/chatEmosOrKeyBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_user"
+            android:background="@drawable/bg_chat_buttons"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/chatMessageInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:ems="10"
+            tools:ignore="TextFields" />
+		<ImageButton
+            android:id="@+id/chatMessageSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_chat_buttons"
+            android:visibility="gone"
+            android:src="@drawable/ic_action_send"
+            tools:ignore="ContentDescription" />
+		
+        <ImageButton
+            android:id="@+id/chatMessagePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_chat_buttons"
+            android:src="@drawable/ic_action_photo"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/chatMessageMicrophone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_chat_buttons"
+            android:src="@drawable/ic_action_microphone"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chatEmoslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+
+            <ImageView
+                android:id="@+id/emo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emo_1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/emo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emo_2"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/emo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emo_3"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/emo4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emo_4"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/emo5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emo_5"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/emo6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emo_6"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

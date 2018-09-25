@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp" >
+	<TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your current status is:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/main"
+     	tools:ignore="HardcodedText"  />
+	<View
+            android:id="@+id/hr"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main" />
+	<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="UseCompoundDrawables" >
+
+            <TextView
+                android:id="@+id/currentStatus"
+                style="@style/chatListItemHints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Hey There! I am using WhatsApp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
+
+			<EditText
+			    android:id="@+id/currentStatusEdit"
+			    android:layout_width="0dp"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1"
+			    android:visibility="gone"
+			    tools:ignore="TextFields" />
+            <ImageButton
+                android:id="@+id/currentStatusEditBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                style="@style/button"
+                android:src="@drawable/ic_action_edit"
+                tools:ignore="ContentDescription" />
+     </LinearLayout>
+	<TextView
+	       android:id="@+id/textView5"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:text="Select your new status:"
+	       android:textAppearance="?android:attr/textAppearanceMedium"
+	       android:textColor="@color/main"
+	    	tools:ignore="HardcodedText"  />
+	<View
+            android:id="@+id/hr2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main" />
+
+	<ListView
+	    android:id="@+id/statusList"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="1"
+	    android:dividerHeight="0dp">
+	</ListView>
+
+</LinearLayout>

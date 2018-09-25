@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Whats UP</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="newChat">New Chat</string>
+    <string name="newGroup">New Group</string>
+    <string name="newBroadCast">New Broadcast</string>
+    <string name="settings">Settings</string>
+    <string name="status">Status</string>
+    <string name="viewContact">View Contact</string>
+    <string name="addConversationShortCut">Add Conversation Shortcut</string>
+    <string name="archiveConversation">Archive Conversation</string>
+    <string name="deleteConversation">Delete Conversation</string>
+    <string name="emailConversation">Email Conversation</string>
+
+    <string-array name="chatListNames">
+        <item>Mohamed Atouch</item>
+        <item>Omar Aouzal</item>
+        <item>Ayoub Boho</item>
+        <item>Mohsin Afir</item>
+        <item>Abdel Elbazi</item>
+        <item>Hassan Aitouatouch</item>
+    </string-array>
+    <string-array name="chatListHints">
+        <item>Culpa qui officia deserunt mollit anim id est laborum.</item>
+        <item>Olore eu fugiat nulla pariatur</item>
+        <item>Duis aute irure dolor in reprehende</item>
+        <item>Quis nostrud exercitation ullamco laboris</item>
+        <item>Lorem ipsum dolor sit amet, cons</item>
+        <item>sunt in culpa qui officia deser</item>
+    </string-array>
+    <string-array name="chatListDates">
+        <item>12:35</item>
+        <item>14:42</item>
+        <item>Yesterday</item>
+        <item>15/11/2014</item>
+        <item>20/09/2014</item>
+        <item>15/12/2013</item>
+    </string-array>
+
+    <integer-array name="chatListNewCounts">
+        <item>5</item>
+        <item>3</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <string-array name="chatListImages">
+        <item>user_image_6</item>
+        <item>user_image_2</item>
+        <item>user_image_4</item>
+        <item>user_image_5</item>
+        <item>profile_pic_2</item>
+        <item>user_image_3</item>
+    </string-array>
+    <string-array name="usersLastSeen">
+        <item>Online</item>
+        <item>Last Seen 14:42</item>
+        <item>Last Seen Yesterday</item>
+        <item>Online</item>
+        <item>Last Seen 20/09/2014</item>
+        <item>Last Seen 15/12/2013</item>
+    </string-array>
+    <string-array name="navDrawerItems">
+        <item>Chats</item>
+        <item>New chat</item>
+        <item>New group</item>
+        <item>New broadcast</item>
+        <item>Settings</item>
+        <item>Status</item>
+    </string-array>
+
+    <array name="navDrawerIcons">
+        <item>@drawable/ic_action_storage</item>
+        <item>@drawable/ic_action_add_person</item>
+        <item>@drawable/ic_action_add_group</item>
+        <item>@drawable/ic_action_switch_video</item>
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_flash_on</item>
+    </array>
+
+    <string name="lorem">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</string>
+
+    <string-array name="chatMessages">
+        <item>hello dear how are you</item>
+        <item>i am fine thanks what about you does everything okay</item>
+        <item>yes </item>
+        <item>dont worry i am fine</item>
+        <item>good </item>
+        <item>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur.</item>
+    </string-array>
+    <string-array name="chatMessagesFrom">
+        <item>me</item>
+        <item>other</item>
+        <item>me</item>
+        <item>me</item>
+        <item>other</item>
+        <item>other</item>
+    </string-array>
+    <string-array name="chatMessagesDate">
+        <item>14:50</item>
+        <item>14:52</item>
+        <item>13:00</item>
+        <item>13:05</item>
+        <item>13:30</item>
+        <item>13:32</item>
+    </string-array>
+    <string-array name="status">
+        <item>Available</item>
+        <item>Busy</item>
+        <item>At school</item>
+        <item>At work</item>
+        <item>In a meeting</item>
+        <item>With family</item>
+        <item>In love</item>
+        <item>Shopping at Mall</item>
+        <item>Sleeping</item>
+        <item>Do not Disturb</item>
+    </string-array>
+    <string-array name="settings">
+        <item>Profile</item>
+        <item>Account</item>
+        <item>Chat settings</item>
+        <item>Notifications</item>
+    </string-array>
+    <string-array name="settingsIcon">
+        <item>Profile</item>
+        <item>Account</item>
+        <item>Chat settings</item>
+        <item>Notifications</item>
+    </string-array>
+	<string-array name="contactsStatus">
+        <item>Available</item>
+        <item>Busy</item>
+        <item>At school</item>
+        <item>At work</item>
+        <item>In a meeting</item>
+        <item>With family</item>
+    </string-array>
+</resources>
