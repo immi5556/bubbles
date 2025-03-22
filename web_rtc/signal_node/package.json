@@ -2,7 +2,7 @@
   "name": "ark-webrtc-video",
   "version": "1.0.0",
   "description": "Simple WebRTC video trial",
-  "main": "server.js",
+  "main": "app.js",
   "type": "module",
   "engines": {
     "node": ">=14"
