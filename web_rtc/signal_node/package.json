@@ -1,0 +1,19 @@
+{
+  "name": "ark-webrtc-video",
+  "version": "1.0.0",
+  "description": "Simple WebRTC video trial",
+  "main": "server.js",
+  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest --coverage"
+  },
+  "author": "Immanuel R",
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.1"
+  }
+}

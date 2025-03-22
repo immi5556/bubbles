@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC File Sharing</title>
+</head>
+<body>
+    <h2>WebRTC File Sharing</h2>
+    <button id="start">Start Connection</button>
+    <button id="sendFile">Send File</button>
+    <input type="file" id="fileInput">
+    <textarea id="offer" placeholder="Offer"></textarea>
+    <textarea id="answer" placeholder="Answer"></textarea>
+    <button id="setOffer">Set Offer</button>
+    <button id="setAnswer">Set Answer</button>
+    <div id="status"></div>
+    <a id="downloadLink" style="display: none;">Download File</a>
+
+    <script>
+        let pc = new RTCPeerConnection();
+        let dataChannel;
+
+        document.getElementById('start').onclick = () => {
+            dataChannel = pc.createDataChannel("fileTransfer");
+            setupDataChannel();
+            pc.createOffer().then(offer => {
+                pc.setLocalDescription(offer);
+                document.getElementById('offer').value = JSON.stringify(offer);
+            });
+        };
+
+        document.getElementById('setOffer').onclick = () => {
+            let offer = JSON.parse(document.getElementById('offer').value);
+            pc.setRemoteDescription(offer);
+            pc.createAnswer().then(answer => {
+                pc.setLocalDescription(answer);
+                document.getElementById('answer').value = JSON.stringify(answer);
+            });
+        };
+
+        document.getElementById('setAnswer').onclick = () => {
+            let answer = JSON.parse(document.getElementById('answer').value);
+            pc.setRemoteDescription(answer);
+        };
+
+        pc.ondatachannel = (event) => {
+            dataChannel = event.channel;
+            setupDataChannel();
+        };
+
+        function setupDataChannel() {
+            dataChannel.onopen = () => document.getElementById('status').textContent = "Connected";
+            dataChannel.onmessage = (event) => receiveFile(event.data);
+        }
+
+        document.getElementById('sendFile').onclick = () => {
+            let file = document.getElementById('fileInput').files[0];
+            if (file && dataChannel.readyState === "open") {
+                file.arrayBuffer().then(buffer => {
+                    dataChannel.send(buffer);
+                });
+            }
+        };
+
+        function receiveFile(data) {
+            let blob = new Blob([data]);
+            let link = document.getElementById('downloadLink');
+            link.href = URL.createObjectURL(blob);
+            link.download = "received_file";
+            link.style.display = "block";
+            link.textContent = "Download Received File";
+        }
+    </script>
+</body>
+</html>

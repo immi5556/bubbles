@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC Sample</title>
+</head>
+<body>
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+
+    <script>
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+
+        //const ws = new WebSocket('ws://localhost:8080');
+        const ws = new WebSocket('wss://webrtc-signal-node.immanuel.co');
+        const pc = new RTCPeerConnection({
+            iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] // Add STUN server
+        });
+
+        // Add local stream to peer connection
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+            .then(stream => {
+                localVideo.srcObject = stream;
+                stream.getTracks().forEach(track => pc.addTrack(track, stream));
+            })
+            .catch(error => console.error('Error accessing media devices.', error));
+
+        pc.oniceconnectionstatechange = () => {
+            console.log('ICE connection state:', pc.iceConnectionState);
+
+            // Check if the ICE connection has failed
+            if (pc.iceConnectionState === 'failed') {
+                console.error('ICE connection failed. Restarting...');
+                // You can restart the connection or handle the failure here
+            }
+        };
+
+        // Handle remote stream
+        pc.ontrack = (event) => {
+            console.log('on track - 1', event);
+            remoteVideo.srcObject = event.streams[0];
+        };
+
+        // Handle ICE candidates
+        pc.onicecandidate = (event) => {
+            console.log('on ice candidate - 1', event);
+            if (event.candidate) {
+                ws.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
+            }
+        };
+
+        // Handle signaling messages
+        ws.onmessage = async (message) => {
+            //console.log('received signal', message)
+            //const data = JSON.parse(message.data);
+            let data;
+            if (message.data instanceof Blob) {
+                // Convert Blob to text
+                data = await message.data.text();
+            } else {
+                // Already a string
+                data = message.data;
+            }
+            data = JSON.parse(data);
+            console.log('received signal', data)
+            if (data.type === 'offer') {
+                console.log('recieved offer - 1')
+                pc.setRemoteDescription(new RTCSessionDescription(data.offer))
+                    .then(() => {
+                        pc.createAnswer();
+                        console.log('create answer - 1')
+                    })
+                    .then(answer => {
+                        pc.setLocalDescription(answer).then(ee => {
+                            console.log('create answer - 4')
+                            ws.send(JSON.stringify({ type: 'answer', answer: pc.localDescription }));
+                        });
+                        console.log('create answer - 2', answer)
+                    })
+                    .then(() => {
+                        console.log('create answer - 3')
+                        //ws.send(JSON.stringify({ type: 'answer', answer: pc.localDescription }));
+                    })
+                    .catch(ex => {
+                        console.log('answer error - 4', ex)
+                    });
+            } else if (data.type === 'answer') {
+                pc.setRemoteDescription(new RTCSessionDescription(data.answer));
+            } else if (data.type === 'candidate') {
+                console.log('add ice candidate - 1')
+                pc.addIceCandidate(new RTCIceCandidate(data.candidate));
+                console.log('add ice candidate - 2')
+            }
+        };
+
+        // Start the call
+        function startCall() {
+            console.log('start call - 1');
+            pc.createOffer()
+                .then(offer => {
+                    console.log('start call - 2')
+                    pc.setLocalDescription(offer).then(ee => {
+                        console.log('start call - 4')
+                        ws.send(JSON.stringify({ type: 'offer', offer: pc.localDescription }));
+                    });
+                })
+                .then(() => {
+                    console.log('start call - 3')
+                    //ws.send(JSON.stringify({ type: 'offer', offer: pc.localDescription }));
+                });
+        }
+        window.addEventListener("DOMContentLoaded", evt => {
+            //startCall();
+        })
+        // Start call automatically for simplicity
+        //startCall();
+    </script>
+</body>
+</html>
