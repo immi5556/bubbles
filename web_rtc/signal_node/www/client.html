@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <title>WebRTC Video Sample: Immanuel R</title>
+    <title>WebRTC Sample</title>
 </head>
 <body>
     <video id="localVideo" autoplay muted></video>
@@ -14,8 +13,7 @@
         const localVideo = document.getElementById('localVideo');
         const remoteVideo = document.getElementById('remoteVideo');
 
-        //const socket = io('http://localhost:8080')
-        const socket = io('https://webrtc-signal-node.immanuel.co');
+        const ws = new WebSocket('wss://webrtc-signal-node.immanuel.co');
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] // Add STUN server
         });
@@ -48,12 +46,23 @@
         pc.onicecandidate = (event) => {
             console.log('on ice candidate - 1', event);
             if (event.candidate) {
-                socket.emit('signal', { type: 'candidate', candidate: event.candidate });
+                ws.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
             }
         };
 
         // Handle signaling messages
-        socket.on('signal', async (data) => {
+        ws.onmessage = async (message) => {
+            //console.log('received signal', message)
+            //const data = JSON.parse(message.data);
+            let data;
+            if (message.data instanceof Blob) {
+                // Convert Blob to text
+                data = await message.data.text();
+            } else {
+                // Already a string
+                data = message.data;
+            }
+            data = JSON.parse(data);
             console.log('received signal', data)
             if (data.type === 'offer') {
                 console.log('recieved offer - 1')
@@ -65,7 +74,7 @@
                     .then(answer => {
                         pc.setLocalDescription(answer).then(ee => {
                             console.log('create answer - 4')
-                            socket.emit('signal', { type: 'answer', answer: pc.localDescription });
+                            ws.send(JSON.stringify({ type: 'answer', answer: pc.localDescription }));
                         });
                         console.log('create answer - 2', answer)
                     })
@@ -83,7 +92,7 @@
                 pc.addIceCandidate(new RTCIceCandidate(data.candidate));
                 console.log('add ice candidate - 2')
             }
-        });
+        };
 
         // Start the call
         function startCall() {
@@ -93,7 +102,7 @@
                     console.log('start call - 2')
                     pc.setLocalDescription(offer).then(ee => {
                         console.log('start call - 4')
-                        socket.emit('signal', { type: 'offer', offer: pc.localDescription });
+                        ws.send(JSON.stringify({ type: 'offer', offer: pc.localDescription }));
                     });
                 })
                 .then(() => {

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Simple WebRTC video trial",
   "main": "app.js",
+  "type": "module",
   "engines": {
     "node": ">=14"
   },
@@ -13,7 +14,6 @@
   "author": "Immanuel R",
   "dependencies": {
     "express": "^4.21.2",
-    "socket.io": "^4.8.1",
     "ws": "^8.18.1"
   }
 }

@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "description": "Simple WebRTC video trial",
   "main": "app.js",
+  "type": "module",
   "engines": {
     "node": ">=14"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node --experimental-modules app.js",
+	"prod": "node --experimental-modules test.mjs",
     "test": "jest --coverage"
   },
   "author": "Immanuel R",
   "dependencies": {
     "express": "^4.21.2",
-    "socket.io": "^4.8.1",
     "ws": "^8.18.1"
   }
 }
