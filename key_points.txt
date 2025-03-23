@@ -2,3 +2,10 @@
 --- python
 
 > python3 -m http.server
+
+---- details hosting
+fodler path: web_rtc\signal_node
+	is hosted in https://webrtc-signal-node.immanuel.co/
+	  - coded to support only 2 direct communication
+	  - open this url in 2 browsers
+	  - in the console call 'startCall()' function
