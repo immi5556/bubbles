@@ -15,18 +15,32 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/client.html');
 });
 
-io.on('connection', (socket) => {
-    console.log('Client connected:', socket.id);
+let socket_id = [];
 
+io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id, socket_id);
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected:', socket.id);
+        if (socket_id.indexOf(socket.id) > -1) socket_id.splice(socket_id.indexOf(socket.id), 1);
+    });
+
+    if (socket_id.length == 2) {
+        setTimeout(() => {
+            io.to(socket.id).emit('crowded', 'no slot available');
+            console.warn('socket excceded...', socket.id, socket_id);
+        }, 2000);
+        return;
+    }
+    socket_id.push(socket.id);
+    if (socket_id.length == 2) { // emable start button for user-1
+        socket.to(socket_id[0]).emit("start_enable", 'enable start');
+    }
     // Relay signaling messages between peers
     socket.on('signal', (data) => {
         console.log('Received signal from', socket.id, ':', data);
         // Broadcast the signal to the other peer
         socket.broadcast.emit('signal', data);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('Client disconnected:', socket.id);
     });
 });
 

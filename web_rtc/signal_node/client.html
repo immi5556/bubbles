@@ -7,6 +7,11 @@
     <title>WebRTC Video Sample: Immanuel R</title>
 </head>
 <body>
+    <p>
+        <p>Supports only 2 users at a time</p>
+        <p id="msg"></p>
+        <button id="call_start" style="display:none;">Start Call</button>
+    </p>
     <video id="localVideo" autoplay muted></video>
     <video id="remoteVideo" autoplay></video>
 
@@ -14,8 +19,8 @@
         const localVideo = document.getElementById('localVideo');
         const remoteVideo = document.getElementById('remoteVideo');
 
-        //const socket = io('http://localhost:8080')
-        const socket = io('https://webrtc-signal-node.immanuel.co');
+        const socket = io('http://localhost:8080')
+        //const socket = io('https://webrtc-signal-node.immanuel.co');
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] // Add STUN server
         });
@@ -51,7 +56,13 @@
                 socket.emit('signal', { type: 'candidate', candidate: event.candidate });
             }
         };
-
+        socket.on('crowded', async (data) => {
+            document.getElementById("msg").innerHTML = 'no slot available for video chat, since we are running on a trial puny server.';
+            socket.disconnect();
+        });
+        socket.on('start_enable', async (data) => {
+            document.getElementById("call_start").style.display = 'block';
+        });
         // Handle signaling messages
         socket.on('signal', async (data) => {
             console.log('received signal', data)
@@ -103,6 +114,7 @@
         }
         window.addEventListener("DOMContentLoaded", evt => {
             //startCall();
+            document.getElementById("call_start").addEventListener("click", evt => startCall());
         })
         // Start call automatically for simplicity
         //startCall();
