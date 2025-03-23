@@ -19,8 +19,8 @@
         const localVideo = document.getElementById('localVideo');
         const remoteVideo = document.getElementById('remoteVideo');
 
-        const socket = io('http://localhost:8080')
-        //const socket = io('https://webrtc-signal-node.immanuel.co');
+        //const socket = io('http://localhost:8080')
+        const socket = io('https://webrtc-signal-node.immanuel.co');
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] // Add STUN server
         });
