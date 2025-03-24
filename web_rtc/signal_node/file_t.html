@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css" />
+    <title>WebRTC File Sharing: Immanuel R</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        p {
+            font-size: 18px;
+            color: white;
+        }
+
+        #user-id {
+            color: white;
+            width: 100%;
+            height: 60px;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header {
+            display: flex;
+            height: 80px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 340px;
+            margin: auto;
+            height: 100%;
+        }
+
+        .btn-container {
+            width: inherit;
+            height: 400px;
+            display: flex;
+            row-gap: 30px;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .btn {
+            height: 60px;
+            width: 180px;
+            font-size: 32px;
+            background-color: black;
+            outline: none;
+            border: 1px solid white;
+            color: white;
+        }
+
+        .send.btn:hover {
+            border-color: aqua;
+            color: aqua;
+        }
+
+        .recieve.btn:hover {
+            border-color: #0af54a;
+            color: #0af54a;
+        }
+
+        button.user:active {
+            border-color: aqua;
+            color: aqua;
+        }
+
+        .wrapper {
+            display: flex;
+            row-gap: 30px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-input {
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            font-size: 18px;
+            color: white;
+        }
+
+        .users {
+            display: flex;
+            height: 300px;
+            width: 100%;
+            row-gap: 15px;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .user {
+            height: 50px;
+            width: 120px;
+            font-size: 20px;
+            background-color: black;
+            outline: none;
+            border: 1px solid white;
+            color: white;
+        }
+
+        .progress_box {
+            height: 300px;
+            justify-content: center;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .progress {
+            margin: 0;
+            font-size: 84px;
+            color: white;
+        }
+
+        .status {
+            margin: 0;
+        }
+
+        .popup {
+            position: fixed;
+            display: flex;
+            width: 340px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            column-gap: 20px;
+            top: 50%;
+            left: 50%;
+            margin-top: -30px;
+            margin-left: -190px;
+            background-color: #1c1c1c;
+            border: 1px solid white;
+        }
+
+        .message {
+            width: 100%;
+        }
+
+        .accept, .decline {
+            height: 30px;
+            width: 110px;
+            background-color: black;
+            outline: none;
+            color: white;
+            margin: 0;
+        }
+
+        .accept {
+            border: 1px solid #0af54a;
+        }
+
+        .decline {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="header">WebRTC File Sharing</h1>
+    <span id="user-id"></span>
+    <div class="container"></div>
+
+    <script>
+        let peerConnection;
+        let dataChannel;
+        let recieveChannel;
+        let file;
+        let userId;
+        const ws = new WebSocket("ws://localhost:8895");
+
+        const userIdElement = document.getElementById("user-id");
+        const container = document.querySelector(".container");
+
+        ws.onmessage = (e) => {
+            let data = JSON.parse(e.data);
+
+            if (data.type === "user-id") {
+                userId = data.userId;
+                userIdElement.textContent = "user id: " + userId;
+            };
+
+            if (data.type === "all-recievers") {
+                showUsers(data.userIds);
+            };
+
+            if (data.type === "join") {
+                createOffer(data.target);
+            };
+
+            if (data.type === "offer") {
+                let sourceUserId = data.name;
+                let offer = data.sdp;
+
+                createAnswer(sourceUserId, offer);
+            };
+
+            if (data.type === "answer") {
+                let answer = data.sdp;
+                addAnswer(answer);
+            };
+
+            if (data.type === "new-ice-candidate") {
+                const candidate = new RTCIceCandidate(data.candidate);
+                addIceCandidates(candidate);
+            };
+
+            if (data.type === "request-status") {
+                if (data.status === "accepted") {
+                    ws.send(JSON.stringify({
+                        type: "initate",
+                        userId: userId,
+                        target: data.userId
+                    }));
+                };
+            }
+
+            if (data.type === "accept-request") {
+                const popup = document.createElement("div");
+                popup.className = "popup";
+
+                const message = document.createElement("p");
+                message.className = "message"
+                message.textContent = `User: ${data.userId} wants to share a file`;
+
+                const accept = document.createElement("button");
+                accept.className = "accept";
+                accept.textContent = "accept";
+                accept.addEventListener("click", () => {
+                    popup.remove();
+                    ws.send(JSON.stringify({
+                        type: "request-status",
+                        userId: userId,
+                        target: data.userId,
+                        status: "accepted"
+                    }));
+                });
+
+                const decline = document.createElement("button");
+                decline.className = "decline";
+                decline.textContent = "decline";
+                decline.addEventListener("click", () => {
+                    popup.remove();
+                    ws.send(JSON.stringify({
+                        type: "request-status",
+                        userId: userId,
+                        target: data.userId,
+                        status: "declined"
+                    }));
+                });
+
+                popup.appendChild(message);
+                popup.appendChild(accept);
+                popup.appendChild(decline);
+                document.body.appendChild(popup);
+
+            };
+        };
+
+        ws.onclose = () => {
+            console.log("Wesocket connection closed...");
+        };
+
+        const sendTo = async (e) => {
+            ws.send(JSON.stringify({
+                type: "accept-request",
+                userId: userId,
+                target: e.currentTarget.textContent,
+                accepted: false
+            }));
+        };
+
+        const showUsers = (users) => {
+            const wrapper = document.querySelector(".wrapper");
+
+            if (wrapper.childNodes.length > 2) {
+                wrapper.lastChild.remove();
+            };
+
+            const usersContainer = document.createElement("div");
+            usersContainer.className = "users";
+
+            users.map((user) => {
+                let userElement = document.createElement("button");
+                userElement.className = "user";
+                userElement.textContent = user;
+                userElement.addEventListener("click", sendTo);
+                usersContainer.appendChild(userElement);
+            });
+
+            wrapper.appendChild(usersContainer);
+        };
+
+        const onUpload = (e) => {
+            file = e.target.files[0];
+        };
+
+
+        const sender = () => {
+            container.firstChild.remove();
+
+            ws.send(JSON.stringify({
+                type: "sender",
+                userId: userId
+            }));
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "wrapper";
+
+            const fileInput = document.createElement("input");
+            const status = document.createElement("p");
+            status.className = "status";
+            status.textContent = "File transfer progress: 0%";
+
+            fileInput.type = "file";
+            fileInput.className = "file-input";
+            fileInput.addEventListener("change", onUpload);
+            wrapper.appendChild(status);
+            wrapper.appendChild(fileInput);
+            container.appendChild(wrapper);
+        };
+
+        const receiever = () => {
+            container.firstChild.remove();
+
+            ws.send(JSON.stringify({
+                type: "reciever",
+                userId: userId
+            }));
+
+
+            const progress_box = document.createElement("div");
+            progress_box.className = "progress_box";
+
+            const progress = document.createElement("p");
+            progress.className = "progress";
+            progress.textContent = "0%";
+
+            const status = document.createElement("p");
+            status.textContent = "complete"
+            progress_box.appendChild(progress);
+            progress_box.appendChild(status);
+
+            container.appendChild(progress_box);
+        };
+
+        const homePage = () => {
+            const btnContainer = document.createElement("div");
+            btnContainer.className = "btn-container";
+            const btnsText = ["send", "recieve"];
+
+            btnsText.map((btnText) => {
+                let btnElement = document.createElement("button");
+                btnElement.className = btnText + " btn"
+                btnElement.textContent = btnText;
+                btnContainer.appendChild(btnElement);
+            });
+
+            container.appendChild(btnContainer);
+
+            const sendBtn = document.querySelector(".send.btn");
+            const recieveBtn = document.querySelector(".recieve.btn");
+
+            sendBtn.addEventListener("click", sender);
+            recieveBtn.addEventListener("click", receiever);
+        };
+
+        homePage();
+
+        const servers = {
+            iceServers: [
+                {
+                    urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302']
+                }
+            ]
+        };
+
+        let createPeerConnection = (targetUserId, sender = false) => {
+            peerConnection = new RTCPeerConnection(servers);
+            peerConnection.addEventListener("icecandidate", (e) => {
+                if (e.candidate) {
+                    ws.send(JSON.stringify({
+                        type: "new-ice-candidate",
+                        target: targetUserId,
+                        candidate: e.candidate
+                    }));
+                };
+            });
+
+            if (sender) {
+                openDataChannel();
+            };
+
+            peerConnection.addEventListener("datachannel", (e) => {
+                const progress = document.querySelector(".progress");
+                recieveChannel = e.channel;
+
+                recieveChannel.addEventListener("error", (err) => {
+                    console.log("Error:", err);
+                });
+
+                let dataArray = [];
+                let fileSize = JSON.parse(recieveChannel.label).size;
+                let recievedSize = 0;
+                recieveChannel.addEventListener("message", (e) => {
+                    const { data } = e;
+                    if (data.toString() === "done") {
+                        recieveChannel.close();
+                        const blob = new Blob(dataArray);
+                        downloadFile(blob, JSON.parse(recieveChannel.label).name);
+                        dataArray = [];
+
+                    } else {
+                        console.log("chunks-received")
+                        dataArray.push(data);
+                        let chunkSize;
+                        if (data.byteLength) {
+                            chunkSize = data.byteLength;
+                        } else {
+                            chunkSize = data.size;
+                        };
+                        recievedSize += chunkSize;
+                        progress.textContent = Math.ceil((recievedSize / (fileSize / 100))) + "%";
+                    };
+                });
+            });
+        };
+
+        const createOffer = async (targetUserId) => {
+            createPeerConnection(targetUserId, true);
+
+            let offer = await peerConnection.createOffer();
+            console.log("created-offer");
+            await peerConnection.setLocalDescription(offer);
+            ws.send(JSON.stringify({
+                name: userId,
+                target: targetUserId,
+                type: "offer",
+                sdp: offer
+            }));
+        };
+
+        const createAnswer = async (targetUserId, offer) => {
+            createPeerConnection(targetUserId);
+            await peerConnection.setRemoteDescription(offer);
+
+            let answer = await peerConnection.createAnswer();
+            console.log("created-answer");
+            await peerConnection.setLocalDescription(answer);
+            ws.send(JSON.stringify({
+                name: userId,
+                target: targetUserId,
+                type: "answer",
+                sdp: answer
+            }));
+        };
+
+        const addAnswer = async (answer) => {
+            if (!peerConnection.currentRemoteDescription) {
+                await peerConnection.setRemoteDescription(answer);
+                console.log("accepted-answer");
+            };
+        };
+
+        const addIceCandidates = (candidate) => {
+            peerConnection.addIceCandidate(candidate);
+            console.log("counterpart's-ice-candidates-added");
+        };
+
+        const openDataChannel = () => {
+            let options = {
+                reliable: true
+            };
+
+            dataChannel = peerConnection.createDataChannel(JSON.stringify({ name: file.name, size: file.size }), options);
+            dataChannel.binaryType = "arraybuffer";
+
+            dataChannel.addEventListener("open", () => {
+                const status = document.querySelector(".status");
+                file.arrayBuffer().then(buffer => {
+                    const chunkSize = 16 * 1024;
+                    let sentSize = 0;
+
+                    const send = () => {
+                        if (!buffer.byteLength) {
+                            dataChannel.send('done');
+                            return;
+                        };
+
+                        console.log("chunks-transfered");
+                        const chunk = buffer.slice(0, chunkSize);
+                        buffer = buffer.slice(chunkSize, buffer.byteLength);
+                        dataChannel.send(chunk);
+                        sentSize += chunk.byteLength;
+                        status.textContent = `File transfer progress: ${Math.ceil(sentSize / (file.size / 100))}%`;
+
+                        if (dataChannel.bufferedAmount > dataChannel.bufferedAmountLowThreshold) {
+                            dataChannel.onbufferedamountlow = () => {
+                                dataChannel.onbufferedamountlow = null;
+                                send();
+                            };
+                        };
+                    };
+                    send();
+                });
+            });
+        };
+
+        const downloadFile = (blob, fileName) => {
+            const a = document.createElement('a');
+            const url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+        };
+
+    </script>
+</body>
+</html>

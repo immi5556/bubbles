@@ -15,6 +15,10 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/client.html');
 });
 
+app.get('/file', function (req, res) {
+    res.sendFile(__dirname + '/file_transfer.html');
+});
+
 let socket_id = [];
 
 io.on('connection', (socket) => {
